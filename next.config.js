@@ -3,5 +3,5 @@ module.exports = {
   images:{
     domains:['i.annihil.us']
   },
-  distDir: 'build',
+ 
 }
