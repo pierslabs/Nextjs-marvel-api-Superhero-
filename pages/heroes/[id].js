@@ -102,7 +102,7 @@ export const getStaticProps = async({params}) => {
 
 export const getStaticPaths = async() => {
   const paths =[
-    {params:{heroe:'1'}}
+    {params:{id:'1'}}
   ]
 
   return {
