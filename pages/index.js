@@ -48,7 +48,7 @@ export default function Home({heroes}) {
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}characters?nameStartsWith=${superHeroSearch.name}&limit=100&ts=${process.env.NEXT_PUBLIC_TS}&apikey=${process.env.NEXT_PUBLIC_PUBLIC_MARVEL_KEY}&hash=${process.env.NEXT_PUBLIC_HASH}`,{
-        mode:'no-cors'
+        referrerPolicy: 'strict-origin', 
       }
     );
 
