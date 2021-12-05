@@ -4,5 +4,9 @@ module.exports = {
   images:{
     domains:['i.annihil.us']
   },
+
+  httpAgentOptions: {
+    keepAlive: false,
+  },
  
 }
