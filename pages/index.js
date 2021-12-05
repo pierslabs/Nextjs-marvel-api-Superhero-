@@ -47,14 +47,14 @@ export default function Home({heroes}) {
     e.preventDefault();
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/characters?nameStartsWith=${superHeroSearch.name}&limit=100&ts=${process.env.NEXT_PUBLIC_TS}&apikey=${process.env.NEXT_PUBLIC_PUBLIC_MARVEL_KEY}&hash=${process.env.NEXT_PUBLIC_HASH}`
+      `${process.env.NEXT_PUBLIC_API_URL}characters?nameStartsWith=${superHeroSearch.name}&limit=100&ts=${process.env.NEXT_PUBLIC_TS}&apikey=${process.env.NEXT_PUBLIC_PUBLIC_MARVEL_KEY}&hash=${process.env.NEXT_PUBLIC_HASH}`
     );
 
     const data = await res.json();
     setSuperHeroSearch({ name: "", search: data });
     setSearch(true)
   }
-console.log(superHeroSearch)
+console.log(  `${process.env.NEXT_PUBLIC_API_URL}characters?nameStartsWith=${superHeroSearch.name}&limit=100&ts=${process.env.NEXT_PUBLIC_TS}&apikey=${process.env.NEXT_PUBLIC_PUBLIC_MARVEL_KEY}&hash=${process.env.NEXT_PUBLIC_HASH}`)
   return (
     <div>
       <Nav/>
