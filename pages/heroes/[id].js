@@ -14,7 +14,8 @@ const Heroe = ({heroe}) => {
       <p>cargando...</p>
     )
   }
-console.log(heroe)
+
+
 
   const SuperHeroeContainer = styled.div`
     display: flex;
