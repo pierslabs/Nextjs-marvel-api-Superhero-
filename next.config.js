@@ -1,3 +1,5 @@
+const securityHeaders = []
+
 module.exports = {
   reactStrictMode: true,
   images:{
@@ -11,6 +13,6 @@ module.exports = {
         headers: securityHeaders,
       },
     ]
-  },
+  }
  
 }
