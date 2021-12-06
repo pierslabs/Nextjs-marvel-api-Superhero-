@@ -1,9 +1,11 @@
+import { useState } from 'react';
+import { useFormik } from 'formik';
 import styled from 'styled-components'
 import Nav from "../components/Nav";
 import InputCard from "../components/InputCard";
 import List from "../components/List";
 import ItemList from "../components/ItemList";
-import { useState } from 'react';
+import {validate} from '../validates'
 
 
 const Container = styled.div`
@@ -34,44 +36,53 @@ export default function Home({heroes}) {
 
   const [search, setSearch] = useState(false);
   
-  const handleChange = e => {
-    const {name, value} = e.target;
 
-    setSuperHeroSearch({
-      ...superHeroSearch,
-      [name]:value
-    })
-  }
 
-  const handleSubmit = async(e) => {
-    e.preventDefault();
+  const handleSubmit = async() => {
 
     const res = await fetch(
-      `https://gateway.marvel.com/v1/public/characters?nameStartsWith=${superHeroSearch.name}&limit=100&ts=${process.env.NEXT_PUBLIC_TS}&apikey=${process.env.NEXT_PUBLIC_PUBLIC_MARVEL_KEY}&hash=${process.env.NEXT_PUBLIC_HASH}`,{
-        referrerPolicy: "same-origin",
+      `https://gateway.marvel.com/v1/public/characters?nameStartsWith=${formik.values.name}&limit=100&ts=${process.env.NEXT_PUBLIC_TS}&apikey=${process.env.NEXT_PUBLIC_PUBLIC_MARVEL_KEY}&hash=${process.env.NEXT_PUBLIC_HASH}`,{
+        
       }
     );
 
+    
     const data = await res.json();
     setSuperHeroSearch({ name: "", search: data });
+
+    console.log(data)
     setSearch(true)
   }
 
+  const formik = useFormik({
+    initialValues: superHeroSearch,
+    onSubmit: handleSubmit,
+    validate: (values) => validate(values),
+  });
+
   return (
     <div>
-      <Nav/>
+      <Nav />
       <Container>
-      <FormContainer onSubmit={handleSubmit} >
-      <InputCard name="name" onChange={handleChange} submit={handleSubmit}/>
-      </FormContainer>
+        <FormContainer onSubmit={formik.handleSubmit}>
+          <InputCard
+            name="name"
+            onChange={formik.handleChange}
+            value={formik.values.name}
+            errors={formik.errors}
+            label="Search Super Hero"
+            placeholder=" Search Alphabetically"
+          />
+        </FormContainer>
         <List title="SuperHero List">
-          { !search ? heroes.map( heroe => 
-            <ItemList key={heroe.id} name={heroe.name} id={heroe.id}/>
-          ) : superHeroSearch.search.data.results.map( heroe => 
-            <ItemList key={heroe.id} name={heroe.name} id={heroe.id}/> 
-          )
-          }
-          </List>
+          {!search
+            ? heroes.map((heroe) => (
+                <ItemList key={heroe.id} name={heroe.name} id={heroe.id} />
+              ))
+            : superHeroSearch.search.data.results.map((heroe) => (
+                <ItemList key={heroe.id} name={heroe.name} id={heroe.id} />
+              ))}
+        </List>
       </Container>
     </div>
   );

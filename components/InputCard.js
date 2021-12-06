@@ -34,14 +34,26 @@ const Input = styled.input`
 `
 const Label = styled.label`
   font-size: 30px;
-  margin-right: 2%;
+  margin: 0 0 2% 1%;
 `
 
-const InputCard = ({name, onChange}) => {
+const ErrorContainer = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  color:red;
+  margin-top: 15px;
+  font-size: 20px;
+`
+
+const InputCard = ({...props}) => {
   return (
   <Card>
-    <Label>Search SuperHero</Label>
-    <Input name={name} onChange={onChange}/>
+    <Label>{props.label}</Label>
+    <Input name={props.name} onChange={props.onChange} value={props.value} placeholder={props.placeholder}/>
+    <ErrorContainer>
+    {props.errors.name ? props.errors.name : null}
+    </ErrorContainer>
+    
   </Card>
   )
 }
